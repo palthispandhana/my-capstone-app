@@ -4,9 +4,26 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = (e: any) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signup Data:", email, password);
+
+    try {
+      const res = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      alert("Signup successful ✅");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong ❌");
+    }
   };
 
   return (
@@ -21,17 +38,21 @@ export default function Signup() {
           type="email"
           placeholder="Email"
           className="w-full p-2 border mb-3"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
           type="password"
           placeholder="Password"
           className="w-full p-2 border mb-3"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
-        <button className="w-full bg-green-500 text-white py-2 rounded">
+        <button className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
           Signup
         </button>
       </form>
