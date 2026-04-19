@@ -2,5 +2,9 @@
   {
     "email": "palthispandhana812@gmail.com",
     "password": "123456"
+  },
+  {
+    "email": "test@gmail.com",
+    "password": "$2b$10$NtcE25SihxP.Is4oAN8Uj.uSIi6bZ5lnTN7.cG86kBmO6rHOstmDW"
   }
 ]
