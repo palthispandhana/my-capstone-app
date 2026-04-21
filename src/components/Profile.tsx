@@ -1,38 +1,36 @@
 import { useEffect, useState } from "react";
 
 export default function Profile() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Loading...");
 
-  // 🔴 STEP 4: Protect page (ADD HERE — at top)
-  if (!localStorage.getItem("token")) {
-    return <h3>Please login first ❌</h3>;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <h2>Profile</h2>
+        <p style={{ color: "red" }}>Please login first ❌</p>
+      </div>
+    );
   }
 
-  // Fetch profile data
   useEffect(() => {
-    fetch("https://my-capstone-app.onrender.com", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+    fetch("https://YOUR-RENDER-URL.onrender.com/profile", {
+      headers: { Authorization: "Bearer " + token },
     })
       .then((res) => res.json())
-      .then((data) => setMessage(data.message));
+      .then((data) => setMessage(data.message))
+      .catch(() => setMessage("Could not load profile"));
   }, []);
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Profile Page</h2>
-
-      <p>{message}</p>
-
-      {/* 🔴 STEP 3: Logout button (ADD HERE — inside return) */}
-      <button
-        onClick={() => {
-          localStorage.removeItem("token");
-          alert("Logged out");
-          window.location.reload();
-        }}
-      >
+      <h2>Profile</h2>
+      <p style={{ color: "green" }}>{message}</p>
+      <button onClick={() => {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }}>
         Logout
       </button>
     </div>
