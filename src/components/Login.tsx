@@ -9,7 +9,7 @@ export default function Login() {
     console.log("Login clicked ✅");
 
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch("https://my-capstone-app.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

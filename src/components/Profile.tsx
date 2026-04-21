@@ -10,7 +10,7 @@ export default function Profile() {
 
   // Fetch profile data
   useEffect(() => {
-    fetch("http://localhost:5000/profile", {
+    fetch("https://my-capstone-app.onrender.com", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
