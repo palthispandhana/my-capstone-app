@@ -6,41 +6,52 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Login clicked ✅");
 
-    const res = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const res = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await res.json();
-    console.log(data);
+      const data = await res.json();
+      console.log("Response:", data);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        alert("Login successful ✅");
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Backend not running ❌");
+    }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleLogin} className="bg-white p-6 shadow rounded">
-        <h2 className="text-xl mb-4">Login</h2>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h2>Login</h2>
 
+      <form onSubmit={handleLogin}>
         <input
           type="email"
           placeholder="Email"
-          className="border p-2 mb-3 w-full"
           onChange={(e) => setEmail(e.target.value)}
         />
+        <br /><br />
 
         <input
           type="password"
           placeholder="Password"
-          className="border p-2 mb-3 w-full"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <br /><br />
 
-        <button className="bg-blue-500 text-white px-4 py-2 w-full">
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

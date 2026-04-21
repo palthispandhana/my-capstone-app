@@ -1,3 +1,6 @@
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
@@ -9,7 +12,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const SECRET_KEY = "mysecretkey"; // later move to .env
+require("dotenv").config();
+const SECRET_KEY = process.env.SECRET_KEY;
 
 // Read users
 const getUsers = () => {
