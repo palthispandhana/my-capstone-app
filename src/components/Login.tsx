@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ export default function Login() {
     e.preventDefault();
     setMsg("Sending...");
     try {
-      const res = await fetch("https://YOUR-RENDER-URL.onrender.com/login", {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

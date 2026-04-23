@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../api";
 
 export default function Profile() {
   const [message, setMessage] = useState("Loading...");
@@ -15,13 +16,13 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    fetch("https://YOUR-RENDER-URL.onrender.com/profile", {
+    fetch(`${API_BASE_URL}/profile`, {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => res.json())
       .then((data) => setMessage(data.message))
       .catch(() => setMessage("Could not load profile"));
-  }, []);
+  }, [token]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>

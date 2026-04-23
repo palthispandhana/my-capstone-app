@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../api";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ export default function Signup() {
     e.preventDefault();
     setMsg("Sending...");
     try {
-      const res = await fetch("https://my-capstone-app.onrender.com/signup", {
+      const res = await fetch(`${API_BASE_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
