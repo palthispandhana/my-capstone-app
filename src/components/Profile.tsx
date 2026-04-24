@@ -1,37 +1,30 @@
-import { useEffect, useState } from "react";
-import { API_BASE_URL } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const [message, setMessage] = useState("Loading...");
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
   if (!token) {
     return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <h2>Profile</h2>
-        <p style={{ color: "red" }}>Please login first ❌</p>
+      <div>
+        <h3>Please login first ❌</h3>
+        <button onClick={() => navigate("/")}>Go to Login</button>
       </div>
     );
   }
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/profile`, {
-      headers: { Authorization: "Bearer " + token },
-    })
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch(() => setMessage("Could not load profile"));
-  }, [token]);
-
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Profile</h2>
-      <p style={{ color: "green" }}>{message}</p>
-      <button onClick={() => {
-        localStorage.removeItem("token");
-        window.location.reload();
-      }}>
+    <div>
+      <h2>Profile Page</h2>
+      <p>Welcome user ✅</p>
+
+      <button
+        onClick={() => {
+          localStorage.removeItem("token");
+          navigate("/");
+        }}
+      >
         Logout
       </button>
     </div>

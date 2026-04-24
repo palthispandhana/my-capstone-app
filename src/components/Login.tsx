@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
@@ -19,6 +21,7 @@ export default function Login() {
       if (data.token) {
         localStorage.setItem("token", data.token);
         setMsg("Login successful ✅");
+        navigate("/profile");
       } else {
         setMsg(data.message || "Login failed ❌");
       }
@@ -32,9 +35,11 @@ export default function Login() {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input type="email" placeholder="Email" value={email}
-          onChange={(e) => setEmail(e.target.value)} required /><br /><br />
+          onChange={(e) => setEmail(e.target.value)} required />
+        <br /><br />
         <input type="password" placeholder="Password" value={password}
-          onChange={(e) => setPassword(e.target.value)} required /><br /><br />
+          onChange={(e) => setPassword(e.target.value)} required />
+        <br /><br />
         <button type="submit">Login</button>
       </form>
       {msg && <p style={{ color: msg.includes("✅") ? "green" : "red" }}>{msg}</p>}

@@ -17,8 +17,8 @@ export default function Signup() {
       });
       const data = await res.json();
       setMsg(data.message || "Done");
-    } catch {
-      setMsg("Cannot reach backend ❌");
+    } catch (err: any) {
+      setMsg("Error: " + err.message);
     }
   };
 
@@ -27,12 +27,14 @@ export default function Signup() {
       <h2>Signup</h2>
       <form onSubmit={handleSignup}>
         <input type="email" placeholder="Email" value={email}
-          onChange={(e) => setEmail(e.target.value)} required /><br /><br />
+          onChange={(e) => setEmail(e.target.value)} required />
+        <br /><br />
         <input type="password" placeholder="Password" value={password}
-          onChange={(e) => setPassword(e.target.value)} required /><br /><br />
+          onChange={(e) => setPassword(e.target.value)} required />
+        <br /><br />
         <button type="submit">Signup</button>
       </form>
-      {msg && <p style={{ marginTop: "16px", color: msg.includes("✅") ? "green" : "red" }}>{msg}</p>}
+      {msg && <p style={{ color: msg.includes("✅") ? "green" : "red" }}>{msg}</p>}
     </div>
   );
 }

@@ -1,42 +1,38 @@
 const express = require("express");
 const cors = require("cors");
-
-app.use(cors({
-  origin: "*"
-}));
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// Test route
+const SECRET_KEY = "mysecretkey";
+
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
 
-// Signup API
 app.post("/signup", (req, res) => {
   const { email, password } = req.body;
-
   console.log("Signup:", email, password);
-
-  res.json({
-    message: "User registered successfully",
-  });
+  res.json({ message: "User registered successfully ✅" });
 });
 
-// Login API
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-
   console.log("Login:", email, password);
 
+  // Generate token so frontend can store it
+  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
+
   res.json({
-    message: "Login successful",
+    message: "Login successful ✅",
+    token: token,
   });
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
